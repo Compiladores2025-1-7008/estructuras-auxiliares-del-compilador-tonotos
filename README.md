@@ -1,2 +1,42 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/x4cR9XE4)
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=21974277&assignment_repo_type=AssignmentRepo)
+# Estructuras Auxiliares del Compilador
+
+Este repositorio contiene la implementación de las estructuras base para el proyecto de Compiladores 2025-1, incluyendo el manejo de Tablas de Símbolos, Tablas de Tipos y Generador de Código.
+
+## Integrantes del Equipo
+
+*   **Israel Rivera** - 320490747
+*   **Ariadna Perez Aparicio** - 320215122
+*   **Joshua Abel Hurtado Aponte** - 320176900
+*   **Mauricio Flores Muñoz** - 320236589
+*   **José Eduardo Cruz Campos** - 319312087
+
+## Instrucciones de Compilación y Ejecución
+### Requisitos
+
+*   Compilador C++17 (`g++`)
+*   `make` (o `mingw32-make` en Windows)
+
+### Compilar
+
+Para compilar el proyecto completo y los tests, simplemente ejecuta en la raíz:
+
+```bash
+make
+```
+
+El sistema detectará automáticamente tu sistema operativo y generará el ejecutable correcto:
+*   **Windows:** `build/tests.exe`
+*   **Linux/Mac:** `build/tests`
+
+### Ejecutar Pruebas
+Para correr las pruebas y verificar que todo funcione:
+
+```bash
+make test
+```
+
+### Limpiar
+Si se quiere borrar los archivos compilados:
+```bash
+make clean
+```
