@@ -1,44 +1,45 @@
 #pragma once
-#include <vector>
-#include <memory>
-#include "symbol_table.hpp"
+#include <deque>
+#include <string>
+#include "SymbolTable.hpp"
 
+// Maneja la pila de tablas scopes.
+// - Solo podemos buscar en el tope  o en la base.
 class SymbolTableStack {
 private:
-    std::vector<std::unique_ptr<SymbolTable*>> stack;
+    std::deque<SymbolTable*> stk; 
 
 public:
-    // Crea nuevo ámbito
-    void pushScope();
+    SymbolTableStack() = default;
 
-    // Sale de un ámbito
-    void popScope();
+    // Métodos para meter tablas a la pila
+    void pushTop(SymbolTable* t)  { stk.push_back(t); }  // Meter scope nuevo 
+    void pushBase(SymbolTable* t) { stk.push_front(t); } // Meter scope global 
 
-    //Sale el ámbito y retorna la referencia a la tabla de símbolos en la cima
-    SymbolTable *popSymbolTable();
-
-    // Insertar solo en tope
-    bool insertTop(const SymbolEntry &entry);
-
-    // Insertar solo en la base (ámbito global)
-    bool insertBase(const SymbolEntry &entry) ;
-
-    // Buscar solo en tope
-    SymbolEntry* lookupTop(const std::string &id);
-
-    // Buscar solo en la base
-    SymbolEntry* lookupBase(const std::string &id);
-
-    // Depuración
-    SymbolTable* currentScope() {
-        if (stack.empty()) return nullptr;
-        return stack.back().get();
+    // Sacar la tabla de hasta arriba 
+    SymbolTable* pop() {
+        if (stk.empty()) return nullptr;
+        SymbolTable* t = stk.back();
+        stk.pop_back();
+        return t; 
     }
 
-    SymbolTable* globalScope() {
-        if (stack.empty()) return nullptr;
-        return stack.front().get();
+    // Busca el scope más interno 
+    const SymbolEntry* lookupTop(const std::string& id) const {
+        if (stk.empty()) return nullptr;
+        return stk.back()->lookup(id);
+    }
+    
+    // Buscar en el scope global
+    const SymbolEntry* lookupBase(const std::string& id) const {
+        if (stk.empty()) return nullptr;
+        return stk.front()->lookup(id);
     }
 
-    size_t levels() const { return stack.size(); }
+    // Getters 
+    SymbolTable* top() const  { return stk.empty() ? nullptr : stk.back(); }
+    SymbolTable* base() const { return stk.empty() ? nullptr : stk.front(); }
+
+    // Cuántos niveles de anidamiento tenemos
+    size_t levels() const { return stk.size(); }
 };
